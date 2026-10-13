@@ -250,7 +250,7 @@ function C = sweep_s(A, Vs, xref, SVALS, PVALS, n, d, N, REPS)
               norm(f{2}() - xref)/nx
               norm(f{3}() - xref)/nx];
         fl = norm(round(xref, 1e-15, s) - xref)/nx;
-        t  = time_best_multi(f, REPS, 0.25);
+        [t, sp] = time_best_multi(f, REPS, 0.25);
         tprep = [time_best(@() stta_prepare_presketched(A, s, p, Yk), 2, 0.1)
                  time_best(@() stta_sketch_operator(A, s, 0, Ysrc), 2, 0.1)];
         [~, memO] = run_ours(A, s, p, Yk, Vs);
@@ -258,8 +258,10 @@ function C = sweep_s(A, Vs, xref, SVALS, PVALS, n, d, N, REPS)
         memS = memS + N*8*numel(Vs{1}.core);    % SRC needs the realisations again
 
         C(ii,:) = [s l fl e.' t memO memS tprep.'];
-        fprintf('  %4d | %9.2e %10.2e %10.2e %12.2e | %9.2f %9.2f %11.2f | %6.1f MB %6.1f MB\n', ...
-                s, fl, e(1), e(2), e(3), t(1), t(2), t(3), memO/1e6, memS/1e6);
+        fprintf(['  %4d | %9.2e %10.2e %10.2e %12.2e | %9.2f %9.2f %11.2f' ...
+                 ' | %6.1f MB %6.1f MB | spread %4.2f\n'], ...
+                s, fl, e(1), e(2), e(3), t(1), t(2), t(3), ...
+                memO/1e6, memS/1e6, max(sp));
     end
     line();
 end

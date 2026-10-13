@@ -118,6 +118,16 @@ it needs, the pre-sketch included, inside the timed call.
 
 Absolute seconds are therefore context; the ratios are the result.
 
+Alongside each time the scripts print `spread`, the ratio of the slowest to
+the fastest of that routine's readings. The minimum is the right estimator
+only as long as the readings measure the same work, one of them with less
+interference than the others; a reading far faster than its siblings means
+something structurally different happened, and no estimator can say which of
+the two numbers is the cost. A spread near one is the evidence that the
+minimum can be trusted. It is a diagnostic and not a rule: nothing is
+discarded and nothing is rerun automatically, and `time_best_multi` only warns
+when some routine's readings lie more than a factor 1.5 apart.
+
 ## Reproducibility
 
 Each experiment seeds the generator at the top (`rng(0)`, `rng(4)`, `rng(11)`),

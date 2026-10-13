@@ -125,12 +125,13 @@ for ii = 1:numel(SVALS)
 
     % ---- timing, round-robin, bracketed by the anchor --------------------
     a0 = anchor();
-    t  = time_best_multi(f, REPS, TARGET);
+    [t, sp] = time_best_multi(f, REPS, TARGET);
     a1 = anchor();
     anc(end+1) = a0;  anc(end+1) = a1; %#ok<AGROW>
 
     for q = 1:6
-        fprintf('    %-14s %9.4f s  %7.2fx\n', LAB{q}, t(q), t(q)/t(4));
+        fprintf('    %-14s %9.4f s  %7.2fx   spread %4.2f\n', ...
+                LAB{q}, t(q), t(q)/t(4), sp(q));
     end
     br = max(a0,a1)/min(a0,a1);
     fprintf('  bracket %.4f / %.4f = %.2fx -> %s\n', a0, a1, br, ...

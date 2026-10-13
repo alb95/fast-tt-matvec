@@ -238,17 +238,19 @@ for ii = 1:numel(SVALS)
     % cheap alternative, charged nothing for its own approximation
     etrunc = norm(round(A*round(v, 1e-14, s), 1e-13) - xref)/nxref;
 
-    t = time_best_multi(f, REPS, TARGET);
+    [t, sp] = time_best_multi(f, REPS, TARGET);
     T(ii,:) = [s EA(ii, DFRAC == DTIME) e etrunc t];
 
     fprintf('=== s = %d   (r^v/s = %.1f) ===\n', s, rv/s);
-    fprintf('    %-20s %10s %9s %8s\n', 'route', 'error', 'seconds', 'x pre');
+    fprintf('    %-20s %10s %9s %8s %8s\n', ...
+            'route', 'error', 'seconds', 'x pre', 'spread');
     fprintf('    %-20s %10.2e\n', 'best rank-s', EA(ii, DFRAC == DTIME));
     for q = 1:6
         if isnan(t(q))
             fprintf('    %-20s %10s %9s\n', LAB{q}, '--', 'not run');
         else
-            fprintf('    %-20s %10.2e %9.4f %7.2fx\n', LAB{q}, e(q), t(q), t(q)/t(IPRE));
+            fprintf('    %-20s %10.2e %9.4f %7.2fx %7.2f\n', ...
+                    LAB{q}, e(q), t(q), t(q)/t(IPRE), sp(q));
         end
     end
     fprintf('    %-20s %10.2e\n', 'truncate b first', etrunc);
