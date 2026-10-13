@@ -27,14 +27,18 @@ data those figures are drawn from.
 
 ## Quick start
 
+Start MATLAB **in the repository root** and run
+
 ```matlab
->> setup                     % adds src/ and utils/ to the path
+>> setup                     % puts the four folders on the path
 >> test_orderings_agree      % seconds: the orderings return the same object
 >> exp1_target_rank          % Figure 1
 ```
 
 Each experiment writes its CSV and a log of the run into the current
-directory. Reference copies of both, from the runs reported in the paper, are
+directory, which is why the root is the place to launch them: `.gitignore`
+ignores those names there, so a rerun cannot overwrite or pollute the
+reference copies in `results/`. Reference copies of both, from the runs reported in the paper, are
 committed in `results/`, so the figures can be rebuilt without re-running
 anything: `pdflatex figures/fig2.tex` reads `results/response_time.csv`
 directly.
@@ -109,9 +113,8 @@ and cancels in the ratio. The minimum rather than the mean is taken because the
 noise is one-sided: a call can be delayed, never accelerated.
 
 The number of inner calls is calibrated once per route so that each timed block
-lasts at least 0.25 s. The passes are 3 for Figures 1 and 2 and 2 for Figure 3.
-Every route builds everything it needs, the pre-sketch included, inside the
-timed call.
+lasts at least 0.25 s, and five passes are made. Every route builds everything
+it needs, the pre-sketch included, inside the timed call.
 
 Absolute seconds are therefore context; the ratios are the result.
 

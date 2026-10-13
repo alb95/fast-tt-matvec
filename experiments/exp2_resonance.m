@@ -79,7 +79,7 @@ ell    = 4;              % oversampling, as in every experiment
 SVALS  = [3 5 10 20 30];
 FORM_MAXGB = 3;          % skip form+round above this core size
 SEQ_MAXGB  = 3;          % skip the sequential route above this core size
-REPS   = 3;
+REPS   = 5;      % passes of the round-robin timer; the minimum is reported
 TARGET = 0.25;
 
 LAB  = {'form + round','STTA sequential','STTA fused','STTA pre-sketched', ...

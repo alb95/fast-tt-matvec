@@ -70,7 +70,7 @@ N     = 100;       % realisations in the stream
 RHO   = 20;        % fluctuation / signal within a single realisation
 SVALS = [4 8 12 16 20 24];
 PVALS = [2 4 6 8 10 12];
-REPS  = 2;         % passes of the round-robin timer over the three routes
+REPS  = 5;         % passes of the round-robin timer over the three routes
 EPSR  = 1e-3;      % residual left in the sum by the second scenario
 
 h  = 1/(n+1);

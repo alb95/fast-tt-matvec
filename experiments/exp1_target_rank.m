@@ -65,7 +65,7 @@ DECADES = 8;          % v's weights fall by 10^-DECADES ...
 REF     = 16;         % ... by its REF-th term.  Fixed, NOT tied to s: the
                       % argument must be the same for all groups.
 
-REPS   = 3;
+REPS   = 5;      % passes of the round-robin timer; the minimum is reported
 TARGET = 0.25;
 
 LAB = {'A*v + round', 'sequential', 'fused', 'pre-sketched', 'SRC', 'SRC absorbed'};
