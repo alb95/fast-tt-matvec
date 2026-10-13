@@ -1,0 +1,39 @@
+exp_response   resonant linear response, one point of a sweep
+d 3
+n 512
+ell 4
+svals [3 5 10 20 30]
+dfrac [0.1 0.001 1e-05 1e-06]
+dtime 1e-06
+mode [5 9 13]
+lambda_star 2713.038804
+multiplicity 6
+spectral_gap 0.497234
+rv 100
+overlap_with_eigenspace 0.0003271
+rA at delta/gap = 0.1      16   rank_x_1e-6 118
+rA at delta/gap = 0.001    16   rank_x_1e-6 18
+rA at delta/gap = 1e-05    16   rank_x_1e-6 7
+rA at delta/gap = 1e-06    16   rank_x_1e-6 3
+rA_timing 16
+tolA_timing 1e-08
+rArv 1600
+reps 3
+target 0.25
+matlab 26.1.0.3312084 (R2026a) Update 4
+threads 12
+computer PCWIN64
+date 2026-10-12 12:15:34
+
+object sizes, megabytes, double precision
+resolvent A         604.0
+excitation b        41.8
+one core of A*b     10485.8
+all cores of A*b    10498.9
+A sketched, s = 3   8.3
+A sketched, s = 5   10.6
+A sketched, s = 10  16.5
+A sketched, s = 20  28.3
+A sketched, s = 30  40.1
+form_round_run 0
+sequential_run 0

@@ -1,0 +1,93 @@
+% Standalone version of Figure 3 of
+%   A. Bucci, S. Guttel, J. W. Pearson,
+%   Fast matrix-vector products in tensor-train format via structured sketching.
+% Reads the committed data in ../results/, so the plot can be rebuilt without
+% re-running the experiment.  pdflatex this file.
+\documentclass[border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.18}
+\pgfplotsset{
+  ttstyle/.style={
+    width=0.47\linewidth, height=0.38\linewidth,
+    tick label style={font=\scriptsize},
+    label style={font=\small},
+    legend style={font=\scriptsize, draw=none, fill=none, at={(0.02,0.98)},
+                  anchor=north west, cells={anchor=west}},
+    grid=both, grid style={line width=0.2pt, draw=black!12},
+    every axis plot/.append style={line width=0.8pt, mark size=1.6pt},
+  },
+  form/.style ={black!55, mark=square*,    mark options={fill=black!55}},
+  seqs/.style ={black!55, mark=square,     dashed},
+  fuse/.style ={blue!60!black,  mark=triangle*},
+  pres/.style ={red!70!black,   mark=*},
+  srcs/.style ={green!45!black, mark=diamond*},
+}
+\begin{document}
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=2 by 2, horizontal sep=1.6cm,
+                               vertical sep=1.5cm},
+    ttstyle, width=0.44\linewidth, height=0.34\linewidth,
+    xlabel={target rank $s$}, xlabel style={font=\small},
+    ylabel style={font=\small}, tick label style={font=\small},
+    legend style={font=\footnotesize, draw=none, fill=none,
+                  at={(1.15,-0.30)}, anchor=north, legend columns=4,
+                  /tikz/every even column/.append style={column sep=0.6em}},
+    legend cell align=left, every mark/.append style={scale=0.8}]
+
+  % ---- row 1: the fluctuations cancel exactly ------------------------------
+  \nextgroupplot[ymode=log,
+  ylabel={relative error},
+                 title={\small (a) exact cancellation, accuracy},
+                 title style={yshift=-1mm}]
+  \addplot[black!45, dashed, mark=none]
+      table[col sep=comma, x index=0, y index=2] {../results/stream.csv};
+  \addplot[thick, blue, mark=*]
+      table[col sep=comma, x index=0, y index=3] {../results/stream.csv};
+  \addplot[thick, red, mark=square*]
+      table[col sep=comma, x index=0, y index=4] {../results/stream.csv};
+  \addplot[thick, black, dashdotted, mark=triangle*]
+      table[col sep=comma, x index=0, y index=5] {../results/stream.csv};
+
+  \nextgroupplot[%ymode=log,
+  ylabel={seconds},
+                 title={\small (b) exact cancellation, time},
+                 title style={yshift=-1mm}]
+  \addplot[thick, blue, mark=*]
+      table[col sep=comma, x index=0, y index=6] {../results/stream.csv};
+  \addplot[thick, red, mark=square*]
+      table[col sep=comma, x index=0, y index=7] {../results/stream.csv};
+  \addplot[thick, black, dashdotted, mark=triangle*]
+      table[col sep=comma, x index=0, y index=8] {../results/stream.csv};
+
+  % ---- row 2: a residual survives the sum ----------------------------------
+  \nextgroupplot[ymode=log, ylabel={relative error},
+                 title={\small (c) residual $10^{-3}$, accuracy},
+                 title style={yshift=-1mm}]
+  \addplot[black!45, dashed, mark=none]
+      table[col sep=comma, x index=0, y index=2] {../results/stream_eps.csv};
+  \addlegendentry{best rank-$s$}
+  \addplot[thick, blue, mark=*]
+      table[col sep=comma, x index=0, y index=3] {../results/stream_eps.csv};
+  \addlegendentry{STTA, pre-sketched}
+  \addplot[thick, red, mark=square*]
+      table[col sep=comma, x index=0, y index=4] {../results/stream_eps.csv};
+  \addlegendentry{SRC, pre-sketched}
+  \addplot[thick, black, dashdotted, mark=triangle*]
+      table[col sep=comma, x index=0, y index=5] {../results/stream_eps.csv};
+  \addlegendentry{compress $v_i$ first}
+
+  \nextgroupplot[%ymode=log,
+  ylabel={seconds},
+                 title={\small (d) residual $10^{-3}$, time},
+                 title style={yshift=-1mm}]
+  \addplot[thick, blue, mark=*]
+      table[col sep=comma, x index=0, y index=6] {../results/stream_eps.csv};
+  \addplot[thick, red, mark=square*]
+      table[col sep=comma, x index=0, y index=7] {../results/stream_eps.csv};
+  \addplot[thick, black, dashdotted, mark=triangle*]
+      table[col sep=comma, x index=0, y index=8] {../results/stream_eps.csv};
+\end{groupplot}
+\end{tikzpicture}
+\end{document}

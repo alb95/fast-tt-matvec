@@ -1,0 +1,47 @@
+% Standalone version of Figure 1 of
+%   A. Bucci, S. Guttel, J. W. Pearson,
+%   Fast matrix-vector products in tensor-train format via structured sketching.
+% Reads the committed data in ../results/, so the plot can be rebuilt without
+% re-running the experiment.  pdflatex this file.
+\documentclass[border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+\begin{tikzpicture}
+    \begin{axis}[
+      width=0.9\linewidth, height=4.5cm,
+      ybar=0.5pt, bar width=5pt,
+      ymode=log, log origin=infty,
+      ymin=0.2, ymax=20,
+      enlarge x limits=0.10,
+      symbolic x coords={formround,sequential,fused,presketched,src,srcabsorbed},
+      xtick=data,
+      xticklabels={{form and round},{sequential STTA},{fused STTA},{pre-sketched STTA},%
+                   {standard SRC},{pre-sketched SRC}},
+      x tick label style={rotate=28, anchor=east, font=\small},
+      ylabel={\shortstack{time relative to\\pre-sketched STTA}},
+      ylabel style={font=\small},
+      ytick={0.2,0.5,2,5,10,20},
+      yticklabels={$0.2$,$0.5$,$2$,$5$,$10$,$20$},
+      minor ytick={0.3,0.4,0.6,0.7,0.8,0.9,3,4,6,7,8,9,30},
+      yticklabel style={font=\small},
+      ymajorgrids, major grid style={dotted, black!30},
+      extra y ticks={1}, extra y tick labels={$1$},
+      extra y tick style={grid=major, grid style={solid, black!55}},
+      legend style={font=\small, at={(0.5,1.02)}, anchor=south,
+                    legend columns=3, draw=none, fill=none,
+                    /tikz/every even column/.append style={column sep=0.8em}},
+      legend cell align=left,
+      ]
+      \addplot table [x=route, y=s6, col sep=comma] {../results/exp1_target_rank_plot.csv};
+      \addlegendentry{$s=6$}
+      \addplot table [x=route, y=s40, col sep=comma] {../results/exp1_target_rank_plot.csv};
+      \addlegendentry{$s=40$}
+      \addplot table [x=route, y=s100, col sep=comma] {../results/exp1_target_rank_plot.csv};
+      \addlegendentry{$s=100$}
+    \end{axis}
+  \end{tikzpicture}
+\end{document}

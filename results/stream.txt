@@ -1,0 +1,19 @@
+exp_stream
+d 4
+n 300
+rA 4
+rv 56
+N 100
+rho 20
+Q 50
+J 6
+svals [4 8 12 16 20 24]
+pvals [2 4 6 8 10 12]
+reps 2
+matlab 26.1.0.3312084 (R2026a) Update 4
+threads 12
+computer PCWIN64
+date 2026-10-09 18:20:03
+
+object sizes, megabytes
+operator A              28.8

@@ -1,0 +1,20 @@
+# MATLAB
+*.asv
+*.mat
+slprj/
+# LaTeX build products
+*.aux
+*.log
+*.synctex.gz
+*.out
+*.fdb_latexmk
+*.fls
+# figures are committed as sources; their PDFs are not
+figures/*.pdf
+# run outputs land in the working directory; the reference copies live in results/
+/exp1_target_rank*.csv
+/exp1_target_rank*.txt
+/response*.csv
+/response.txt
+/stream*.csv
+/stream*.txt

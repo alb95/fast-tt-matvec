@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the paper below."
+title: "fast-tt-matvec: fast matrix-vector products in tensor-train format via structured sketching"
+authors:
+  - family-names: Bucci
+    given-names: Alberto
+  - family-names: Guttel
+    given-names: Stefan
+  - family-names: Pearson
+    given-names: "John W."
+license: BSD-3-Clause
+repository-code: "https://github.com/alb95/fast-tt-matvec"
+preferred-citation:
+  type: article
+  title: "Fast matrix-vector products in tensor-train format via structured sketching"
+  authors:
+    - family-names: Bucci
+      given-names: Alberto
+    - family-names: Guttel
+      given-names: Stefan
+    - family-names: Pearson
+      given-names: "John W."
+  year: 2026

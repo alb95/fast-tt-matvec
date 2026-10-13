@@ -1,0 +1,103 @@
+% Standalone version of Figure 2 of
+%   A. Bucci, S. Guttel, J. W. Pearson,
+%   Fast matrix-vector products in tensor-train format via structured sketching.
+% Reads the committed data in ../results/, so the plot can be rebuilt without
+% re-running the experiment.  pdflatex this file.
+\documentclass[border=5pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.18}
+
+\begin{document}
+  \pgfplotstableread[col sep=comma]{../results/response_time.csv}\responsedata
+\begin{tikzpicture}
+    \begin{groupplot}[
+      group style={
+        group size=2 by 1,
+        horizontal sep=2.6cm,
+      },
+      width=0.41\linewidth,
+      height=5.2cm,
+      xmode=log,
+      log basis x=2,
+      xtick=data,
+      xticklabels from table={\responsedata}{s},
+      xlabel={target rank $s$},
+      xlabel style={font=\small},
+      ylabel style={font=\small},
+      tick label style={font=\scriptsize},
+      unbounded coords=jump,
+      grid=major,
+      grid style={dotted, black!30},
+      legend style={
+        font=\scriptsize,
+        draw=none,
+        fill=none,
+        at={(0.5,-0.28)},
+        anchor=north,
+        /tikz/every even column/.append style={
+          column sep=0.3em
+        },
+      },
+      legend cell align=left,
+      every mark/.append style={scale=0.7},
+    ]
+
+    % ---- (a) accuracy --------------------------------------------------
+    \nextgroupplot[
+      ymode=log,
+      ylabel={relative error},
+      title={\small (a) accuracy},
+      title style={yshift=-1mm},
+      legend columns=2,
+    ]
+
+    \addplot+[thick, blue, mark=*]
+      table [x=s, y=e_pre] {\responsedata};
+    \addlegendentry{STTA methods}
+
+    \addplot+[thick, red, mark=square*]
+      table [x=s, y=e_src] {\responsedata};
+    \addlegendentry{SRC methods}
+
+    \addplot+[thick, black, dashed, mark=none]
+      table [x=s, y=e_floor] {\responsedata};
+    \addlegendentry{best rank-$s$}
+
+    \addplot+[thick, mark=triangle*]
+      table [x=s, y=e_trunc] {\responsedata};
+    \addlegendentry{truncate $v$ first}
+
+
+    % ---- (b) time ------------------------------------------------------
+    \nextgroupplot[
+      ymode=log,
+      ymin=0.3,
+      ylabel={seconds},
+      title={\small (b) time},
+      title style={yshift=-1mm},
+      ytick={0.4,1.6,6.4},
+      yticklabels={0.4,1.6,6.4},
+      legend columns=2,
+    ]
+
+    \addplot+[thick, blue, mark=*]
+      table [x=s, y=t_pre] {\responsedata};
+    \addlegendentry{pre-sketched STTA}
+
+    \addplot+[thick, red, mark=square*]
+      table [x=s, y=t_src_abs] {\responsedata};
+    \addlegendentry{pre-sketched SRC}
+
+    \addplot+[thick, blue, dashed, mark=*]
+      table [x=s, y=t_fused] {\responsedata};
+    \addlegendentry{fused STTA}
+
+    \addplot+[thick, red, dashed, mark=square*]
+      table [x=s, y=t_src] {\responsedata};
+    \addlegendentry{standard SRC}
+
+    \end{groupplot}
+  \end{tikzpicture}
+\end{document}

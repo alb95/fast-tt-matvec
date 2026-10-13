@@ -1,0 +1,26 @@
+exp3_target_rank
+d 4
+m 512
+n 512
+rA 4
+rv 40
+ell 4
+svals [6 40 100]
+decades 8
+ref 16
+reps 3
+target 0.25
+anchor [0.02873 0.02861 0.02812 0.02797 0.02955 0.03077 0.03337 0.03328]
+anchor_spread 1.1932
+matlab 26.1.0.3312084 (R2026a) Update 4
+threads 12
+computer PCWIN64
+date 2026-09-19 20:00:00
+
+object sizes, megabytes, double precision
+operator      83.9
+v             13.4
+cores of A*v  211.0
+A sketched, s = 6    1.6
+A sketched, s = 40   7.2
+A sketched, s = 100  17.0
