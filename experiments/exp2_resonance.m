@@ -1,47 +1,12 @@
 %EXP2_RESONANCE  Resonant linear response: A b compressed far below the rank of b.
 %
-%   THE SETTING, AND WHY IT IS NOT AN ITERATION.  Given a discretised operator
+%   THE SETTING.  Given a discretised operator
 %   L on a tensor grid and a FIXED excitation b, the response at a detuning
 %   sigma is
 %
 %       x(sigma) = (L - sigma I)^{-1} b,
 %
-%   and one evaluates it for a whole sweep of sigma.  This is the frequency
-%   response of a structure or a cavity, the resolvent analysis of a flow, the
-%   Green function (E + i eta - H)^{-1} v swept over E, and the shift solves of
-%   interpolatory model reduction.  Nothing here is iterative: the solves are
-%   independent of one another, b is given data and is never updated, and
-%   sigma is prescribed by the application rather than by a convergence
-%   history.  There is no "after the first step the argument is aligned".
-%
-%   WHY THE ANSWER IS OF LOW RANK NEAR A RESONANCE.  In the eigenbasis of L,
-%
-%       x(sigma) = sum_j  b_j / (lambda_j - sigma)  phi_j .
-%
-%   As sigma approaches an eigenvalue lambda*, the terms of that eigenspace
-%   are amplified by 1/delta, delta = |sigma - lambda*|, and every other term
-%   by at most 1/gap.  The response therefore collapses onto the resonant
-%   eigenspace, and for a Kronecker sum that eigenspace is spanned by
-%   SEPARABLE vectors: it has low TT rank.  The excitation b keeps its own
-%   rank r^v throughout.  High rank in, low rank out, with both ends given by
-%   the problem.
-%
-%   THE LAW THE SWEEP EXHIBITS.  The relative error of the rank-s truncation,
-%   once s reaches the TT rank of the eigenspace, is proportional to the
-%   detuning:  ||x - trunc_s(x)||/||x|| ~ (delta/gap) ||b_perp||/|b_*| .  The
-%   table below shows it decade by decade, which is what makes the example
-%   verifiable rather than anecdotal.
-%
-%   THE RESONANT EIGENSPACE.  lambda* = mu_a + mu_b + mu_c with a, b, c
-%   DISTINCT has multiplicity d! = 6, and its eigenspace is spanned by the
-%   permutations of phi_a (x) phi_b (x) phi_c: six orthonormal separable
-%   vectors, so its TT rank is exactly d = 3.  Below s = 3 the answer is not
-%   representable at all, whatever the detuning; at and above s = 3 the error
-%   is the detuning error.  Both facts are visible in the table.
-%
-%   A NOTE ON DAMPING.  A physically damped response has sigma complex, the
-%   damping playing the role of delta.  The rank mechanism is identical; we
-%   keep sigma real so that every quantity, sketches included, stays real.
+%   and one evaluates it for a whole sweep of sigma.  
 %
 %   THE ROUTES, all computing a rank-s approximation of x = A b.
 %       form + round          A*b at TT-rank r^A r^v, then TT-rounded
