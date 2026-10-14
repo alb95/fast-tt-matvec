@@ -22,8 +22,9 @@ data those figures are drawn from.
 * MATLAB. The results in the paper were produced with R2026a; `pagemtimes` and
   `tensorprod` are used, so R2022a or later is needed.
 * The [TT-Toolbox](https://github.com/oseledets/TT-Toolbox). Everything here
-  takes and returns `tt_tensor` and `tt_matrix` objects. Pin a commit rather
-  than tracking `master`: the semantics of `round` have changed in the past.
+  takes and returns `tt_tensor` and `tt_matrix` objects. The toolbox is
+  distributed from `master` with no tagged releases, so record the commit you
+  used alongside any timing you report.
 
 ## Quick start
 
@@ -37,18 +38,17 @@ Start MATLAB **in the repository root** and run
 
 Each experiment writes its CSV and a log of the run into the current
 directory, which is why the root is the place to launch them: `.gitignore`
-ignores those names there, so a rerun cannot overwrite or pollute the
-reference copies in `results/`. Reference copies of both, from the runs reported in the paper, are
-committed in `results/`, so the figures can be rebuilt without re-running
-anything: `pdflatex figures/fig2.tex` reads `results/response_time.csv`
-directly.
+ignores those names there, so a rerun cannot touch the copies in `results/`.
+Those copies are the ones behind the published figures, so a figure can be
+rebuilt without running anything — `pdflatex figures/fig2.tex` reads
+`results/response_time.csv` directly.
 
 ## Layout
 
 | folder | contents |
 |---|---|
 | `src/` | the six compression routes and their building blocks |
-| `utils/` | random TT test problems, the timing harness, CSV output, the operation-count model |
+| `utils/` | random TT test problems, the timing harness and warm-up, CSV output, the operation-count model |
 | `experiments/` | one script per figure |
 | `results/` | the CSVs and run logs behind the published figures |
 | `figures/` | standalone `pgfplots` sources that redraw each figure from `results/` |
@@ -106,7 +106,7 @@ application.
 several passes, and the minimum over passes. Running every repetition of one
 route before starting the next would measure the first and the last route on a
 processor in different thermal states — the drift measured over one of these
-scripts was a factor 1.34, larger than several of the ratios the experiments
+scripts was a factor 1.4, larger than several of the ratios the experiments
 exist to establish. Alternating puts the readings to be compared seconds apart
 instead of minutes, so the drift multiplies them all by nearly the same factor
 and cancels in the ratio. The minimum rather than the mean is taken because the
@@ -115,6 +115,15 @@ noise is one-sided: a call can be delayed, never accelerated.
 The number of inner calls is calibrated once per route so that each timed block
 lasts at least 0.25 s, and five passes are made. Every route builds everything
 it needs, the pre-sketch included, inside the timed call.
+
+Each script also calls `warm_up` before measuring anything, by default for 90
+seconds of dense matrix products. A processor starts a run at its boost clock
+and settles towards its base clock as the run heats it up, and that settling is
+reproducible rather than random: two independent cold runs of the first
+experiment produced almost the same rising curve of reference readings.
+Measuring past the transient brought the drift over a run from 1.4 down to 1.1
+and left every block usable. It raised the absolute times by about a fifth,
+uniformly, and moved no ratio.
 
 Absolute seconds are therefore context; the ratios are the result.
 
@@ -131,9 +140,13 @@ when some routine's readings lie more than a factor 1.5 apart.
 ## Reproducibility
 
 Each experiment seeds the generator at the top (`rng(0)`, `rng(4)`, `rng(11)`),
-so a rerun on the same MATLAB version reproduces the same problem instance. The
-logs in `results/*.txt` record the MATLAB version, thread count, platform and
-date of the published runs.
+so a rerun on the same MATLAB version reproduces the same problem instance, and
+the errors it reports are deterministic. The logs in `results/*.txt` record the
+MATLAB version, thread count, platform and date of the published runs.
+
+The times are not deterministic, so each experiment was run twice. Across the
+three of them the largest change in a published ratio was 5.4 per cent, which
+is the basis for the figure quoted in the paper.
 
 ## Licence
 
