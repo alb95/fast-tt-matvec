@@ -34,14 +34,6 @@
 %   (SRC its first s).  The sketches are therefore nested, and a change
 %   between two groups of bars cannot be a different draw of the dice.
 %
-%   EVERY ROUTE PAYS FOR EVERYTHING IT NEEDS INSIDE THE TIMER, the sketched
-%   operator included, and the routes are timed round-robin so that the
-%   processor's clock drifting over the run cancels in the ratios.  The
-%   pre-sketched order runs through stta_matvec_presketched, which builds the sketched
-%   operator and the assembly layout from a single transposition of each
-%   operator core, inside the call; SRC builds its own sketched operator
-%   inside its call as well (the absorbed variant), or needs none (SRC).
-%
 %   OUTPUT
 %       exp1_target_rank.csv        one row per s: seconds and errors
 %       exp1_target_rank_plot.csv   one row per route, one column per s,
