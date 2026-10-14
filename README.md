@@ -21,10 +21,7 @@ data those figures are drawn from.
 
 * MATLAB. The results in the paper were produced with R2026a; `pagemtimes` and
   `tensorprod` are used, so R2022a or later is needed.
-* The [TT-Toolbox](https://github.com/oseledets/TT-Toolbox). Everything here
-  takes and returns `tt_tensor` and `tt_matrix` objects. The toolbox is
-  distributed from `master` with no tagged releases, so record the commit you
-  used alongside any timing you report.
+* The [TT-Toolbox](https://github.com/oseledets/TT-Toolbox).
 
 ## Quick start
 
