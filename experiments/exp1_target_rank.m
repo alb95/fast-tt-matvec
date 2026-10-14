@@ -67,6 +67,7 @@ REF     = 16;         % ... by its REF-th term.  Fixed, NOT tied to s: the
 
 REPS   = 5;      % passes of the round-robin timer; the minimum is reported
 TARGET = 0.25;
+WARMUP = 90;     % seconds of dense load before any timing; 0 to skip
 
 LAB = {'A*v + round', 'sequential', 'fused', 'pre-sketched', 'SRC', 'SRC absorbed'};
 TAG = {'formround', 'sequential', 'fused', 'presketched', 'src', 'srcabsorbed'};
@@ -88,6 +89,8 @@ for k = 1:d, Yall{k} = randn(m, max(SVALS) + p); end
 
 exact = A*v;
 nex   = norm(exact);
+
+warm_up(WARMUP);
 
 %% ---- anchor -------------------------------------------------------------
 anchor = @() anchor_reading(d, 256, 4, 30, 8, p, REPS, TARGET);

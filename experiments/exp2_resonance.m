@@ -81,6 +81,7 @@ FORM_MAXGB = 3;          % skip form+round above this core size
 SEQ_MAXGB  = 3;          % skip the sequential route above this core size
 REPS   = 5;      % passes of the round-robin timer; the minimum is reported
 TARGET = 0.25;
+WARMUP = 90;     % seconds of dense load before any timing; 0 to skip
 
 LAB  = {'form + round','STTA sequential','STTA fused','STTA pre-sketched', ...
         'SRC standard','SRC pre-sketched'};
@@ -201,6 +202,8 @@ runSeq  = coreGB <= SEQ_MAXGB;
 if ~runForm, fprintf('  -> form+round SKIPPED (core exceeds %g GB)\n', FORM_MAXGB); end
 if ~runSeq,  fprintf('  -> sequential SKIPPED (core exceeds %g GB)\n', SEQ_MAXGB);  end
 fprintf('\n');
+
+warm_up(WARMUP);
 
 %% ---- the comparison --------------------------------------------------------
 Yall = cell(1,d);

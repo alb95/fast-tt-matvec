@@ -1,4 +1,4 @@
-exp_response   resonant linear response, one point of a sweep
+exp2_resonance   resonant linear response, one point of a sweep
 d 3
 n 512
 ell 4
@@ -18,12 +18,12 @@ rA at delta/gap = 1e-06    16   rank_x_1e-6 3
 rA_timing 16
 tolA_timing 1e-08
 rArv 1600
-reps 3
+reps 5
 target 0.25
 matlab 26.1.0.3312084 (R2026a) Update 4
 threads 12
 computer PCWIN64
-date 2026-10-12 12:15:34
+date 2026-10-13 19:37:40
 
 object sizes, megabytes, double precision
 resolvent A         604.0

@@ -71,6 +71,7 @@ RHO   = 20;        % fluctuation / signal within a single realisation
 SVALS = [4 8 12 16 20 24];
 PVALS = [2 4 6 8 10 12];
 REPS  = 5;         % passes of the round-robin timer over the three routes
+WARMUP = 90;       % seconds of dense load before any timing; 0 to skip
 EPSR  = 1e-3;      % residual left in the sum by the second scenario
 
 h  = 1/(n+1);
@@ -136,8 +137,10 @@ H = {'s', 'ell', 'floor', 'e_ours', 'e_src', 'e_trunc', ...
      't_prep_ours', 't_prep_src'};
 
 fprintf('  SCENARIO 1 -- exact cancellation, %d realisations\n', N);
+warm_up(WARMUP);
 C1 = sweep_s(A, Vs, xref, SVALS, PVALS, n, d, N, REPS);
 write_csv('stream.csv', H, C1);
+vbytes = 8*numel(Vs{1}.core);   % one realisation, kept for the log below
 clear Vs
 
 % the second scenario: a fluctuation of relative size EPSR survives the sum,
@@ -210,8 +213,8 @@ fprintf(fid, 'matlab %s\nthreads %d\ncomputer %s\ndate %s\n', ...
         version, maxNumCompThreads, computer, datestr(now, 31));
 fprintf(fid, '\nobject sizes, megabytes\n');
 fprintf(fid, 'operator A              %.1f\n', 8*numel(A.core)/1e6);
-fprintf(fid, 'one realisation         %.2f\n', 8*numel(Vs{1}.core)/1e6);
-fprintf(fid, 'the whole stream        %.1f\n', N*8*numel(Vs{1}.core)/1e6);
+fprintf(fid, 'one realisation         %.2f\n', vbytes/1e6);
+fprintf(fid, 'the whole stream        %.1f\n', N*vbytes/1e6);
 fprintf(fid, 'exact sum, TT rank      %d\n', N*rA*rv);
 fclose(fid);
 fprintf('\n  written stream.csv, stream_residual.csv, stream.txt\n\n');
