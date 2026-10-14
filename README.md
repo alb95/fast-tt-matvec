@@ -100,39 +100,13 @@ application.
 ## How the timings were taken
 
 `time_best_multi` times the routes **round-robin**: one call of each per pass,
-several passes, and the minimum over passes. Running every repetition of one
-route before starting the next would measure the first and the last route on a
-processor in different thermal states — the drift measured over one of these
-scripts was a factor 1.4, larger than several of the ratios the experiments
-exist to establish. Alternating puts the readings to be compared seconds apart
-instead of minutes, so the drift multiplies them all by nearly the same factor
-and cancels in the ratio. The minimum rather than the mean is taken because the
-noise is one-sided: a call can be delayed, never accelerated.
-
-The number of inner calls is calibrated once per route so that each timed block
-lasts at least 0.25 s, and five passes are made. Every route builds everything
+several passes, and the minimum over passes. 
+Every route builds everything
 it needs, the pre-sketch included, inside the timed call.
 
 Each script also calls `warm_up` before measuring anything, by default for 90
-seconds of dense matrix products. A processor starts a run at its boost clock
-and settles towards its base clock as the run heats it up, and that settling is
-reproducible rather than random: two independent cold runs of the first
-experiment produced almost the same rising curve of reference readings.
-Measuring past the transient brought the drift over a run from 1.4 down to 1.1
-and left every block usable. It raised the absolute times by about a fifth,
-uniformly, and moved no ratio.
+seconds of dense matrix products. 
 
-Absolute seconds are therefore context; the ratios are the result.
-
-Alongside each time the scripts print `spread`, the ratio of the slowest to
-the fastest of that routine's readings. The minimum is the right estimator
-only as long as the readings measure the same work, one of them with less
-interference than the others; a reading far faster than its siblings means
-something structurally different happened, and no estimator can say which of
-the two numbers is the cost. A spread near one is the evidence that the
-minimum can be trusted. It is a diagnostic and not a rule: nothing is
-discarded and nothing is rerun automatically, and `time_best_multi` only warns
-when some routine's readings lie more than a factor 1.5 apart.
 
 ## Reproducibility
 
