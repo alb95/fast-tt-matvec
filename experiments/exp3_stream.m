@@ -26,19 +26,6 @@
 %     trunc-1st   round v_i to rank s, apply A exactly, add, round again.  The
 %                 route a user takes without any of this machinery.
 %
-%   WHAT IS TIMED.  The realisations are generated ONCE, outside the timed
-%   region, and all three routes read the same array: the generator is not part
-%   of any method.  Each route builds what depends on the operator -- the
-%   prepared operator for ours, the sketched operator for SRC -- INSIDE its own
-%   timed call, once for the whole stream, which is exactly the amortisation
-%   the Krylov section claims.  The three routes are timed round-robin and
-%   repeated (time_best_multi), and the run also times the operator-dependent
-%   part alone, so that the table can report what fraction of the work it is.
-%
-%   THE MEMORY COLUMN is what each route must hold while the stream runs: two
-%   accumulators for ours, the first-sweep sketches AND the realisations for
-%   SRC, one running TT tensor for trunc-1st.
-%
 %   TWO SCENARIOS, the same sweep in s run twice.
 %     exact      the column sums of the coefficients vanish, so sum_i A v_i is
 %                exactly N A m, of TT rank r^A r^u.
